@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chess</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <div id="chessboard"></div>
+
+        <script>
+            const pieces = {
+                b_rook_1: '&#9820;',
+                b_rook_2: '&#9820;',
+                b_bishop_1: '&#9821;',
+                b_bishop_2: '&#9821;',
+                b_pawn_1: '&#9823;',
+                b_pawn_2: '&#9823;',
+                b_pawn_3: '&#9823;',
+                b_pawn_4: '&#9823;',
+                b_pawn_5: '&#9823;',
+                b_pawn_6: '&#9823;',
+                b_pawn_7: '&#9823;',
+                b_pawn_8: '&#9823;',
+                b_knight_1: '&#9822;',
+                b_knight_2: '&#9822;',
+                b_queen: '&#9819;',
+                b_king: '&#9818;',
+
+                w_rook_1: '&#9814;',
+                w_rook_2: '&#9814;',
+                w_bishop_1: '&#9815;',
+                w_bishop_2: '&#9815;',
+                w_pawn_1: '&#9817;',
+                w_pawn_2: '&#9817;',
+                w_pawn_3: '&#9817;',
+                w_pawn_4: '&#9817;',
+                w_pawn_5: '&#9817;',
+                w_pawn_6: '&#9817;',
+                w_pawn_7: '&#9817;',
+                w_pawn_8: '&#9817;',
+                w_knight_1: '&#9816;',
+                w_knight_2: '&#9816;',
+                w_queen: '&#9813;',
+                w_king: '&#9812;',
+            }
+            
+            function load_board() {
+	            rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
+	            cols = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  	            var count = 0;
+
+                for(var i = 0; i < rows.length; i++) {
+                    for (var j = 0; j < cols.length; j++) {
+
+                        // after every 8th tile start new line w css- clear: left 
+                        if(count % 8 == 0) {
+                            $("#chessboard").append('<div class="tile" style="clear:left"></div>');
+                        } else{
+                            $("#chessboard").append('<div class="tile"></div>');
+                        }
+
+                        // assign position to tile
+                        $(".tile").eq(count).attr("data-position", ((rows[rows.length - (i +1)] + cols[j])));
+                        
+                        // add background for every other tile
+                        if(((i % 2 == 0) && (j % 2 != 0)) || ((i % 2 != 0) && (j % 2 == 0))) {
+                            $(".tile").eq(count).addClass("black");
+                        } else {
+                            $(".tile").eq(count).addClass("white");
+                        }
+
+                        count++;
+                    }
+                }
+            }
+
+            function load_pieces() {
+                var tiles = document.getElementsByClassName('tile')
+
+                for(var i = 0; i < tiles.length; i++) {
+                    const tile_position = $(tiles[i]).data().position;
+                    
+                    switch(tile_position) {
+                        case 'H1':
+                            $('.tile[data-position=H1]').append(`<span class="piece">${ pieces.b_rook_1 }</span>`);
+                        case 'H2':
+                            $('.tile[data-position=H2]').append(`<span class="piece">${ pieces.b_knight_1 }</span>`);
+                        case 'H3':
+                            $('.tile[data-position=H3]').append(`<span class="piece">${ pieces.b_bishop_1 }</span>`);
+                        case 'H4':
+                            $('.tile[data-position=H4]').append(`<span class="piece">${ pieces.b_queen }</span>`);
+                        case 'H5':
+                            $('.tile[data-position=H5]').append(`<span class="piece">${ pieces.b_king }</span>`);
+                        case 'H6':
+                            $('.tile[data-position=H6]').append(`<span class="piece">${ pieces.b_bishop_2 }</span>`);
+                        case 'H7':
+                            $('.tile[data-position=H7]').append(`<span class="piece">${ pieces.b_knight_2 }</span>`);
+                        case 'H8':
+                            $('.tile[data-position=H8]').append(`<span class="piece">${ pieces.b_rook_2 }</span>`);
+                        case 'G1':
+                            $('.tile[data-position=G1]').append(`<span class="piece">${ pieces.b_pawn_1 }</span>`);
+                        case 'G2':
+                            $('.tile[data-position=G2]').append(`<span class="piece">${ pieces.b_pawn_2 }</span>`);
+                        case 'G3':
+                            $('.tile[data-position=G3]').append(`<span class="piece">${ pieces.b_pawn_3 }</span>`);
+                        case 'G4':
+                            $('.tile[data-position=G4]').append(`<span class="piece">${ pieces.b_pawn_4 }</span>`);
+                        case 'G5':
+                            $('.tile[data-position=G5]').append(`<span class="piece">${ pieces.b_pawn_5 }</span>`);
+                        case 'G6':
+                            $('.tile[data-position=G6]').append(`<span class="piece">${ pieces.b_pawn_6 }</span>`);
+                        case 'G7':
+                            $('.tile[data-position=G7]').append(`<span class="piece">${ pieces.b_pawn_7 }</span>`);
+                        case 'G8':
+                            $('.tile[data-position=G8]').append(`<span class="piece">${ pieces.b_pawn_8 }</span>`);
+                        case 'B1':
+                            $('.tile[data-position=B1]').append(`<span class="piece">${ pieces.w_pawn_1 }</span>`);
+                        case 'B2':
+                            $('.tile[data-position=B2]').append(`<span class="piece">${ pieces.w_pawn_2 }</span>`);
+                        case 'B3':
+                            $('.tile[data-position=B3]').append(`<span class="piece">${ pieces.w_pawn_3 }</span>`);
+                        case 'B4':
+                            $('.tile[data-position=B4]').append(`<span class="piece">${ pieces.w_pawn_4 }</span>`);
+                        case 'B5':
+                            $('.tile[data-position=B5]').append(`<span class="piece">${ pieces.w_pawn_5 }</span>`);
+                        case 'B6':
+                            $('.tile[data-position=B6]').append(`<span class="piece">${ pieces.w_pawn_6 }</span>`);
+                        case 'B7':
+                            $('.tile[data-position=B7]').append(`<span class="piece">${ pieces.w_pawn_7 }</span>`);
+                        case 'B8':
+                            $('.tile[data-position=B8]').append(`<span class="piece">${ pieces.w_pawn_8 }</span>`);
+                        case 'A1':
+                            $('.tile[data-position=A1]').append(`<span class="piece">${ pieces.w_rook_1 }</span>`);
+                        case 'A2':
+                            $('.tile[data-position=A2]').append(`<span class="piece">${ pieces.w_knight_1 }</span>`);
+                        case 'A3':
+                            $('.tile[data-position=A3]').append(`<span class="piece">${ pieces.w_bishop_1 }</span>`);
+                        case 'A4':
+                            $('.tile[data-position=A4]').append(`<span class="piece">${ pieces.w_queen }</span>`);
+                        case 'A5':
+                            $('.tile[data-position=A5]').append(`<span class="piece">${ pieces.w_king }</span>`);
+                        case 'A6':
+                            $('.tile[data-position=A6]').append(`<span class="piece">${ pieces.w_bishop_2 }</span>`);
+                        case 'A7':
+                            $('.tile[data-position=A7]').append(`<span class="piece">${ pieces.w_knight_2 }</span>`);
+                        case 'A8':
+                            $('.tile[data-position=A8]').append(`<span class="piece">${ pieces.w_rook_2 }</span>`);
+                        default:
+                            return null
+                    }
+                }
+            }
+
+            $(document).on('click', '.tile', function() {
+                const position = $(this).data().position;
+
+                if($(this).children().length > 0) {
+                    // has piece
+                    // todo: get data from piece
+                } else {
+                    // doesn't have piece, do nothing
+                }
+            });
+
+            $(document).ready(function() {
+
+                load_board();
+                load_pieces();
+
+            });
+        </script>
+    </body>
+</html>
