@@ -327,7 +327,7 @@
                         potential_destinations.push(`${ nextCol[piece_column] + piece_row }`)
 
                         if(move === 0) {
-                            
+                            potential_destinations.push(nextCol[nextCol[piece_column]] + piece_row);
                         }
 
                         break;
@@ -338,9 +338,14 @@
 
             function clear_active_tiles() {
                 const active_tiles = document.getElementsByClassName('active_tile');
+                const potential_moves = document.getElementsByClassName('potential_destination');
 
                 if(active_tiles.length > 0) {
                     $('.tile').removeClass('active_tile');
+                }
+
+                if(potential_moves.length > 0) {
+                    $('.tile').removeClass('potential_destination');
                 }
             }
 
@@ -370,7 +375,6 @@
                 } else {
 
                     // doesn't contain piece, do nothing
-                    clear_active_tiles();
                 }
             });
 
