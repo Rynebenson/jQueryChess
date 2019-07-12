@@ -1,0 +1,1 @@
+// could use this file to store all javascript code
