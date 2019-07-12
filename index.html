@@ -290,9 +290,63 @@
                 }
             }
 
+            function highlight_potential_moves(potential_destinations) {
+                for(var i = 0; i < potential_destinations.length; i++) {
+                    $(`.tile[data-position=${ potential_destinations[i] }]`).addClass(' potential_destination');
+                }
+            }
+
             function evaluate_moves(position, type, team, move) {
 
-                console.log(`Position: ${ position } \n Piece type: ${ type } \n Team: ${ team } \n Move: ${ move }`);
+                let potential_destinations = [];
+                const nextCol = {
+                    'A': 'B',
+                    'B': 'C',
+                    'C': 'D',
+                    'D': 'E',
+                    'E': 'F',
+                    'F': 'G',
+                    'G': 'H'
+                };
+
+                const prevCol = {
+                    'H': 'G',
+                    'G': 'F',
+                    'F': 'E',
+                    'E': 'D',
+                    'D': 'C',
+                    'C': 'B',
+                    'B': 'A'
+                };
+
+                let piece_column = position.charAt(0);
+                let piece_row = position.charAt(1);
+
+                switch(type) {
+                    case "pawn":
+                        potential_destinations.push(`${ nextCol[piece_column] + piece_row }`)
+
+                        if(move === 0) {
+                            
+                        }
+
+                        break;
+                }
+
+                highlight_potential_moves(potential_destinations);
+            }
+
+            function clear_active_tiles() {
+                const active_tiles = document.getElementsByClassName('active_tile');
+
+                if(active_tiles.length > 0) {
+                    $('.tile').removeClass('active_tile');
+                }
+            }
+
+            function toggle_tile(position) {
+                clear_active_tiles();
+                $(`.tile[data-position=${position}]`).addClass(' active_tile');
             }
 
             $(document).on('click', '.tile', function() {
@@ -306,16 +360,17 @@
                     
                     if(team == gameplay.player_turn) {
 
-                        // toggle_tile(position)
+                        toggle_tile(position)
                         evaluate_moves(position, type, team, move);
                     } else {
 
                         // not their turn
-                        console.log('not your turn');
+                        clear_active_tiles();
                     }
                 } else {
 
                     // doesn't contain piece, do nothing
+                    clear_active_tiles();
                 }
             });
 

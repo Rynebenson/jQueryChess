@@ -12,6 +12,12 @@ body {
   height: 64px;
   float: left;
 }
+.active_tile {
+  box-shadow: inset 0 0 25px rgba(0, 255, 255, 0.5);
+}
+.potential_destination {
+  box-shadow: inset 0 0 25px rgba(255, 0, 255, 0.5);
+}
 .black {
   background-color: rgba(0, 0, 0, 0.5);
 }
