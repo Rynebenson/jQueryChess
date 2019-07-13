@@ -4,8 +4,9 @@ body {
 }
 #chessboard {
   float: left;
-  border: 4px solid black;
-  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.88);
+  padding: 25px;
+  margin: 25px;
 }
 .tile {
   width: 64px;
@@ -14,27 +15,27 @@ body {
   cursor: pointer;
 }
 .active_tile {
-  box-shadow: inset 0 0 25px rgba(0, 255, 255, 0.5);
+  box-shadow: inset 0 0 24px rgba(0, 255, 255, 0.75);
 }
 .potential_destination {
   animation: blink 1.5s linear infinite;
 }
 @keyframes blink {
   0% {
-    box-shadow: inset 0 0 44px rgba(0, 255, 255, 0.5);
+    box-shadow: inset 0 0 44px rgba(0, 255, 255, 0.75);
   }
   50% {
-    box-shadow: inset 0 0 24px rgba(0, 255, 255, 0.5);
+    box-shadow: inset 0 0 24px rgba(0, 255, 255, 0.75);
   }
   100% {
-    box-shadow: inset 0 0 44px rgba(0, 255, 255, 0.5);
+    box-shadow: inset 0 0 44px rgba(0, 255, 255, 0.75);
   }
 }
 .black {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0);
 }
 .white {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.95);
 }
 .piece {
     display: flex;
@@ -44,4 +45,8 @@ body {
     width: 64px;
     font-size: 44px;
     padding: 0;
+}
+.piece_image {
+  height: 54px;
+  width: 54px;
 }
