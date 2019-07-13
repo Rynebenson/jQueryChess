@@ -211,6 +211,26 @@
                     move: 0
                 },
             }
+
+            const nextCol = {
+                'A': 'B',
+                'B': 'C',
+                'C': 'D',
+                'D': 'E',
+                'E': 'F',
+                'F': 'G',
+                'G': 'H'
+            };
+
+            const prevCol = {
+                'H': 'G',
+                'G': 'F',
+                'F': 'E',
+                'E': 'D',
+                'D': 'C',
+                'C': 'B',
+                'B': 'A'
+            };
             
             function load_board() {
 
@@ -332,35 +352,23 @@
             function evaluate_moves(position, type, team, move) {
 
                 let potential_destinations = [];
-                const nextCol = {
-                    'A': 'B',
-                    'B': 'C',
-                    'C': 'D',
-                    'D': 'E',
-                    'E': 'F',
-                    'F': 'G',
-                    'G': 'H'
-                };
-
-                const prevCol = {
-                    'H': 'G',
-                    'G': 'F',
-                    'F': 'E',
-                    'E': 'D',
-                    'D': 'C',
-                    'C': 'B',
-                    'B': 'A'
-                };
-
                 let piece_column = position.charAt(0);
                 let piece_row = position.charAt(1);
 
                 switch(type) {
                     case "pawn":
-                        potential_destinations.push(`${ nextCol[piece_column] + piece_row }`)
+                        if(team == 'white') {
+                            potential_destinations.push(`${ nextCol[piece_column] + piece_row }`)
 
-                        if(move === 0) {
-                            potential_destinations.push(nextCol[nextCol[piece_column]] + piece_row);
+                            if(move === 0) {
+                                potential_destinations.push(nextCol[nextCol[piece_column]] + piece_row);
+                            }
+                        } else {
+                            potential_destinations.push(`${ prevCol[piece_column] + piece_row }`);
+
+                            if(move === 0) {
+                                potential_destinations.push(prevCol[prevCol[piece_column]] + piece_row);
+                            }
                         }
 
                         break;
@@ -372,13 +380,13 @@
             function clear_active_tiles() {
                 const active_tiles = document.getElementsByClassName('active_tile');
                 const potential_moves = document.getElementsByClassName('potential_destination');
-                
-                if(active_tiles.length > 0) {
-                    $('.tile').removeClass('active_tile');
+
+                for(var i = 0; i < active_tiles.length; i++) {
+                    $(`.tile`).removeClass(' active_tile');
                 }
 
-                if(potential_moves.length > 0) {
-                    $('.tile').removeClass('potential_destination');
+                for(var j = 0; j < potential_moves.length; j++) {
+                    $(`.tile`).removeClass(' potential_destination');
                 }
             }
 
@@ -387,13 +395,24 @@
                 $(`.tile[data-position=${position}]`).addClass(' active_tile');
             }
 
+            function toggle_player_turn() {
+                if(gameplay.player_turn == 'white') {
+                    gameplay.player_turn = 'black';
+                    console.log(gameplay.player_turn);
+                } else {
+                    gameplay.player_turn = 'white';
+                    console.log(gameplay.player_turn);
+                }
+            }
+
             function move_piece(destination, piece) {
-                clear_active_tiles();
                 $(`.tile[data-position=${destination}]`).append(piece);
+                clear_active_tiles();
+                toggle_player_turn();
             }
 
             $(document).on('click', '.potential_destination', function() {
-                
+                console.log(this);
                 const destination = $(this).data().position;
                 const piece = $('.active_tile').children('span');
 
@@ -401,7 +420,7 @@
             });
 
             $(document).on('click', '.tile', function() {
-
+            
                 const position = $(this).data().position;
 
                 if($(this).children().length > 0) {
@@ -425,7 +444,6 @@
             });
 
             $(document).ready(function() {
-
                 load_board();
                 load_pieces();
             });
