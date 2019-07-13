@@ -372,7 +372,7 @@
             function clear_active_tiles() {
                 const active_tiles = document.getElementsByClassName('active_tile');
                 const potential_moves = document.getElementsByClassName('potential_destination');
-
+                
                 if(active_tiles.length > 0) {
                     $('.tile').removeClass('active_tile');
                 }
@@ -389,7 +389,6 @@
 
             function move_piece(destination, piece) {
                 clear_active_tiles();
-                console.log(piece);
                 $(`.tile[data-position=${destination}]`).append(piece);
             }
 
