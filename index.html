@@ -10,9 +10,6 @@
         <div id="chessboard"></div>
 
         <script>
-            // TODO:
-            //  diagonal paths in path_is_open()
-
             let gameplay = {
                 status: 'ingame',
                 player_turn: 'white'
@@ -544,10 +541,44 @@
                                 currCol = nextCol[currCol];
                             }
                         } else { // top to bottom
-                            
+                            currCol = prevCol[currCol];
+
+                            for(currRow = ((1 * row) + 1); currRow <= destination_row; currRow++) {
+                                var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
+
+                                if($(current_element).children().length > 0) {
+                                    return false
+                                }
+
+                                currCol = prevCol[prevCol];
+                            }
                         }
                     } else { // right to left
-                        
+                        if(letterToNum[col] < letterToNum[destination_col]) { // bottom to top
+                            currCol = nextCol[currCol];
+
+                            for(currRow = (row - 1); currRow >= destination_row; currRow--) {
+                                var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
+
+                                if($(current_element).children().length > 0) {
+                                    return false
+                                }
+
+                                currCol = nextCol[currCol];
+                            }
+                        } else { // top to bottom
+                            currCol = prevCol[currCol];
+
+                            for(currRow = (row - 1); currRow >= destination_row; currRow--) {
+                                var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
+
+                                if($(current_element).children().length > 0) {
+                                    return false
+                                }
+
+                                currCol = prevCol[currCol];
+                            }
+                        }
                     }
                 } else if(col === destination_col){ // if path is horizontal
                     if(row < destination_row) { // traverse right
