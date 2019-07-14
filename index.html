@@ -349,7 +349,7 @@
                 }
             }
 
-            function evaluate_moves(position, type, team, move) {
+            function evaluate_potential_moves(position, type, team, move) {
 
                 let potential_destinations = [];
                 let piece_column = position.charAt(0);
@@ -357,24 +357,61 @@
 
                 switch(type) {
                     case "pawn":
-                        if(team == 'white') {
-                            potential_destinations.push(`${ nextCol[piece_column] + piece_row }`)
+                        // push positions for one move forward & backward
+                        potential_destinations.push(nextCol[piece_column] + piece_row);
+                        potential_destinations.push(prevCol[piece_column] + piece_row);
 
-                            if(move === 0) {
-                                potential_destinations.push(nextCol[nextCol[piece_column]] + piece_row);
-                            }
-                        } else {
-                            potential_destinations.push(`${ prevCol[piece_column] + piece_row }`);
+                        if(move == 0) {
+                            // push positions for two moves forward & backward if it's first move
+                            potential_destinations.push(nextCol[nextCol[piece_column]] + piece_row);
+                            potential_destinations.push(prevCol[prevCol[piece_column]] + piece_row);
+                        }
 
-                            if(move === 0) {
-                                potential_destinations.push(prevCol[prevCol[piece_column]] + piece_row);
-                            }
+                        // push positions for diagonal moves
+                        potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) + 1));
+                        potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) - 1));
+                        potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) + 1));
+                        potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) - 1));
+
+                        break;
+                    case "rook":
+                        // push positions for forward and backwards moves
+                        for(const key in nextCol) {
+                            potential_destinations.push(key + piece_row);
+                        }
+                        potential_destinations.push(`H${ piece_row }`);
+
+                        // push positions for left and right moves
+                        for(var i = 1; i < 9; i++) {
+                            potential_destinations.push(piece_column + i);
                         }
 
                         break;
+                    case "knight":
+                        // forward/backward two & left/right one
+                        potential_destinations.push(nextCol[nextCol[piece_column]] + ((1 * piece_row) - 1));
+                        potential_destinations.push(nextCol[nextCol[piece_column]] + ((1 * piece_row) + 1));
+                        potential_destinations.push(prevCol[prevCol[piece_column]] + ((1 * piece_row) - 1));
+                        potential_destinations.push(prevCol[prevCol[piece_column]] + ((1 * piece_row) + 1));
+
+                        // left/right two & forward/backward one
+                        potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) + 2));
+                        potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) - 2));
+                        potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) + 2));
+                        potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) - 2));
                 }
 
+                console.log(potential_destinations);
+
                 highlight_potential_moves(potential_destinations);
+            }
+
+            function evaluate_valid_moves(position, type, team, move) {
+                let potential_moves = evaluate_potential_moves();
+            }
+
+            function evaluate_moves(position, type, team, move) {
+                evaluate_potential_moves(position, type, team, move);
             }
 
             function clear_active_tiles() {
@@ -398,10 +435,8 @@
             function toggle_player_turn() {
                 if(gameplay.player_turn == 'white') {
                     gameplay.player_turn = 'black';
-                    console.log(gameplay.player_turn);
                 } else {
                     gameplay.player_turn = 'white';
-                    console.log(gameplay.player_turn);
                 }
             }
 
@@ -412,7 +447,6 @@
             }
 
             $(document).on('click', '.potential_destination', function() {
-                console.log(this);
                 const destination = $(this).data().position;
                 const piece = $('.active_tile').children('span');
 
@@ -430,7 +464,7 @@
                     
                     if(team == gameplay.player_turn) {
 
-                        toggle_tile(position)
+                        toggle_tile(position);
                         evaluate_moves(position, type, team, move);
                     } else {
 
