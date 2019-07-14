@@ -5,7 +5,6 @@
         <title>Chess</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="index.css">
-        <script src="index.js"></script>
     </head>
     <body>
         <div id="chessboard"></div>
@@ -231,6 +230,28 @@
                 'C': 'B',
                 'B': 'A'
             };
+
+            const letterToNum = {
+                'A': 1,
+                'B': 2,
+                'C': 3,
+                'D': 4,
+                'E': 5,
+                'F': 6,
+                'G': 7,
+                'H': 8
+            }
+
+            const numToLetter = {
+                1: 'A',
+                2: 'B',
+                3: 'C',
+                4: 'D',
+                5: 'E',
+                6: 'F',
+                7: 'G',
+                8: 'H'
+            }
             
             function load_board() {
 
@@ -354,6 +375,9 @@
                 let potential_destinations = [];
                 let piece_column = position.charAt(0);
                 let piece_row = position.charAt(1);
+                let current_column = piece_column;
+                let increment_row = piece_row;
+                let decrement_row = piece_row;
 
                 switch(type) {
                     case "pawn":
@@ -399,19 +423,261 @@
                         potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) - 2));
                         potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) + 2));
                         potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) - 2));
+
+                        break;
+                    case "bishop":
+                        // backwards through columns
+                        while(current_column !== 'A') {
+                            current_column = prevCol[current_column];
+
+                            if(increment_row < 8) {
+                                potential_destinations.push(current_column + (++increment_row));
+                            }
+
+                            if(decrement_row > 1) {
+                                potential_destinations.push(current_column + (--decrement_row));
+                            }
+                        }
+
+                        current_column = piece_column;
+                        increment_row = piece_row;
+                        decrement_row = piece_row;
+
+                        // forwards through columns
+                        while(current_column !== 'H') {
+                            current_column = nextCol[current_column];
+
+                            if(increment_row < 8) {
+                                potential_destinations.push(current_column + (++increment_row));
+                            }
+
+                            if(decrement_row > 1) {
+                                potential_destinations.push(current_column + (--decrement_row));
+                            }
+                        }
+
+                        break;
+                    case "queen":
+                        // moves like rook
+                        for(const key in nextCol) {
+                            potential_destinations.push(key + piece_row);
+                        }
+                        potential_destinations.push(`H${ piece_row }`);
+
+                        // push positions for left and right moves
+                        for(var i = 1; i < 9; i++) {
+                            potential_destinations.push(piece_column + i);
+                        }
+
+                        // also moves like bishop
+
+                        while(current_column !== 'A') {
+                            current_column = prevCol[current_column];
+
+                            if(increment_row < 8) {
+                                potential_destinations.push(current_column + (++increment_row));
+                            }
+
+                            if(decrement_row > 1) {
+                                potential_destinations.push(current_column + (--decrement_row));
+                            }
+                        }
+
+                        current_column = piece_column;
+                        increment_row = piece_row;
+                        decrement_row = piece_row;
+
+                        // forwards through columns
+                        while(current_column !== 'H') {
+                            current_column = nextCol[current_column];
+
+                            if(increment_row < 8) {
+                                potential_destinations.push(current_column + (++increment_row));
+                            }
+
+                            if(decrement_row > 1) {
+                                potential_destinations.push(current_column + (--decrement_row));
+                            }
+                        }
+
+                        break;
+                    case 'king':
+                        // move one space in any direction
+                        potential_destinations.push(piece_column + ((1 * piece_row) + 1));
+                        potential_destinations.push(piece_column + ((1 * piece_row) - 1));
+                        potential_destinations.push(nextCol[piece_column] + piece_row);
+                        potential_destinations.push(prevCol[piece_column] + piece_row);
+                        potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) + 1));
+                        potential_destinations.push(nextCol[piece_column] + ((1 * piece_row) - 1));
+                        potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) + 1));
+                        potential_destinations.push(prevCol[piece_column] + ((1 * piece_row) - 1));
+
+                        break;
                 }
 
-                console.log(potential_destinations);
+                return potential_destinations
+            }
 
-                highlight_potential_moves(potential_destinations);
+            function path_is_open(position, destination) {
+                let col = position.charAt(0);
+                let row = position.charAt(1);
+                let destination_col = destination.charAt(0);
+                let destination_row = destination.charAt(1);
+                let currCol = col;
+                let currRow = row;
+
+                if(col !== destination_col && row !== destination_row) { // if path is diagonal
+                    if(row < destination_row) { // left to right
+                        if(letterToNum[col] < letterToNum[destination_col]) { // bottom to top
+                            currCol = nextCol[currCol];
+
+                            for(currRow = ((1 * row) + 1); currRow <= destination_row; currRow++) {
+                                var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
+
+                                if($(current_element).children().length > 0) {
+                                    return false
+                                }
+
+                                currCol = nextCol[currCol];
+                            }
+                        } else { // top to bottom
+                            
+                        }
+                    } else { // right to left
+                        
+                    }
+                } else if(col === destination_col){ // if path is horizontal
+                    if(row < destination_row) { // traverse right
+                        for(var i = ((1 * row) + 1); i <= destination_row; i++) {
+                            var current_element = $(`.tile[data-position=${col + i}]`)[0];
+                            if($(current_element).children().length > 0) {
+                                return false
+                            }
+                        }
+                    } else { // traverse left
+                        for(var i = (row - 1); i >= destination_row; i--) {
+                            var current_element = $(`.tile[data-position=${col + i}]`)[0];
+                            if($(current_element).children().length > 0) {
+                                return false;
+                            }
+                        }
+                    }
+                } else { // if path is vertical
+                    if(letterToNum[col] < letterToNum[destination_col]) { // traverse up
+                        for(var i = (letterToNum[col] + 1); i <= letterToNum[destination_col]; i++) {
+                            var current_element = $(`.tile[data-position=${numToLetter[i] + row}]`)[0];
+                            if($(current_element).children().length > 0) {
+                                return false;
+                            }
+                        }
+                    } else { // traverse down
+                        for(var i = (letterToNum[col] - 1); i >= letterToNum[destination_col]; i--) {
+                            var current_element = $(`.tile[data-position=${numToLetter[i] + row}]`)[0];
+                            if($(current_element).children().length > 0) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            function valid_location(position) {
+                let col = position.charAt(0);
+                let row = position.substring(1, position.length);
+
+                if(row > 8 || row < 1) {
+                    return false;
+                }
+
+                switch(col) {
+                    case 'A':
+                    case 'B':
+                    case 'C':
+                    case 'D':
+                    case 'E':
+                    case 'F':
+                    case 'G':
+                    case 'H':
+                        return true;
+                    default:
+                        return false;
+                }
             }
 
             function evaluate_valid_moves(position, type, team, move) {
-                let potential_moves = evaluate_potential_moves();
+                let valid_moves = evaluate_potential_moves(position, type, team, move).filter(Boolean);
+
+                for(var i = 0; i < valid_moves.length; i++) {
+                    let destination = valid_moves[i];
+
+                    // if location is not valid, remove
+                    if(!valid_location(destination)) {
+                        delete valid_moves[i];
+                    }
+
+                    // if location has a piece from your team within, remove
+                    if($(`.tile[data-position=${ destination }]`).children().length > 0) {
+                        const destination_team = $(`.tile[data-position=${destination}]`).children('span').data().team;
+                        
+                        if(team === destination_team) {
+                            delete valid_moves[i];
+                        }
+                    }
+
+                    if(type === "pawn") {
+                        let col = position.charAt(0);
+                        let row = position.charAt(1);
+                        let destination_col = destination.charAt(0);
+                        let destination_row = destination.charAt(1);
+
+                        // if destination is behind pawn, remove
+                        if(team === "black") {
+                            if(letterToNum[destination_col] > letterToNum[col]) {
+                                delete valid_moves[i];
+                            }
+                        } else {
+                            if(letterToNum[destination_col] < letterToNum[col]) {
+                                delete valid_moves[i];
+                            }
+                        }
+
+                        // if move is diagonal, remove unless opponent is there
+                        if(destination_row != row) {
+
+                            var destination_element = $(`.tile[data-position=${destination}]`)[0];
+                            if(destination_element) {
+                                if(!$(destination_element).children().length > 0) {
+                                    delete valid_moves[i];
+                                }
+                            }
+                        } else { // pawns can't attack forward
+                            
+                            var destination_element = $(`.tile[data-position=${destination}]`)[0];
+                            if($(destination_element).children().length > 0) {
+                                delete valid_moves[i];
+                            }
+                        }
+                    }
+
+                    if(type !== "knight") {
+                        if(valid_location(destination)) {
+                            if(!path_is_open(position, destination)) {
+                                delete valid_moves[i];
+                            }
+                        }
+                    }
+
+                } // end of for loop
+
+                highlight_potential_moves(valid_moves);
+
+                return valid_moves;
             }
 
             function evaluate_moves(position, type, team, move) {
-                evaluate_potential_moves(position, type, team, move);
+                evaluate_valid_moves(position, type, team, move);
             }
 
             function clear_active_tiles() {
