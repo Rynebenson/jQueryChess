@@ -78,10 +78,10 @@ body {
 .boneyard_list {
   display: block;
   text-align: left;
-  margin: 25px 0 0;
 }
 .boneyard_list img {
   width: 20%;
   height: auto;
+  margin-top: 25px;
   margin-bottom: 25px;
 }

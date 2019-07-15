@@ -854,7 +854,29 @@
                 });
             }
 
-            function move_piece(destination, piece, piece_id) {
+            function check_if_king_is_in_check(team) {
+                let opposite_team;
+                team === "white" ? opposite_team = "black" : opposite_team = "white"
+                // get opponents kings position
+                let kings_position = $(`.piece[data-team="${opposite_team}"][data-type="king"]`).parent('div').data().position;
+                
+                // for each piece left for team check if kings position is in valid moves
+                let teams_pieces = $(`.piece[data-team="${team}"]`);
+
+                for(var i = 0; i < teams_pieces.length; i++) {
+                    const { type, team, move } = $(teams_pieces[i]).data();
+                    const position = $(teams_pieces[i]).parent('div').data().position;
+
+                    let valid_moves = evaluate_valid_moves(position, type, team, move);
+
+                    if(valid_moves.indexOf(kings_position) > -1) {
+                        alert('check!');
+                    }
+                }
+                
+            }
+
+            function move_piece(destination, piece, piece_id, team) {
                 let current_element = $(`.tile[data-position=${destination}]`)[0];
 
                 if($(current_element).children().length > 0) {
@@ -866,11 +888,13 @@
                     clear_active_tiles();
                     toggle_player_turn();
                     add_move_to_piece(piece_id);
+                    check_if_king_is_in_check(team);
                 } else {
                     $(`.tile[data-position=${destination}]`).append(piece);
                     clear_active_tiles();
                     toggle_player_turn();
                     add_move_to_piece(piece_id);
+                    check_if_king_is_in_check(team);
                 }
             }
 
@@ -878,8 +902,9 @@
                 const destination = $(this).data().position;
                 const piece = $('.active_tile').children('span');
                 const piece_id = $('.active_tile').children('span').data().id;
+                const current_team = $('.active_tile').children('span').data().team;
 
-                move_piece(destination, piece, piece_id);
+                move_piece(destination, piece, piece_id, current_team);
             });
 
             $(document).on('click', '.tile', function() {
