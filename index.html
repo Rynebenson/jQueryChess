@@ -10,6 +10,9 @@
         <div class="board_wrapper">
             <div id="chessboard"></div>
         </div>
+        <div class="boneyard">
+            <span className="boneyard_header">Boneyard</span>
+        </div>
 
         <script>
             let gameplay = {
@@ -17,200 +20,264 @@
                 player_turn: 'white'
             }
 
-            const pieces = {
+            var pieces = {
 
                 b_pawn_1: {
+                    id: 1,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_2: {
+                    id: 2,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_3: {
+                    id: 3,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_4: {
+                    id: 4,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_5: {
+                    id: 5,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_6: {
+                    id: 6,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_7: {
+                    id: 7,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_pawn_8: {
+                    id: 8,
                     entity: '&#9823;',
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_rook_1: {
+                    id: 9,
                     entity: '&#9820;',
                     image: `<img class="piece_image" src="./images/black_rook.png" alt="" />`,
                     type: 'rook',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_rook_2: {
+                    id: 10,
                     entity: '&#9820;',
                     image: `<img class="piece_image" src="./images/black_rook.png" alt="" />`,
                     type: 'rook',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_bishop_1: {
+                    id: 11,
                     entity: '&#9821;',
                     image: `<img class="piece_image" src="./images/black_bishop.png" alt="" />`,
                     type: 'bishop',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_bishop_2: {
+                    id: 12,
                     entity: '&#9821;',
                     image: `<img class="piece_image" src="./images/black_bishop.png" alt="" />`,
                     type: 'bishop',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_knight_1: {
+                    id: 13,
                     entity: '&#9822;',
                     image: `<img class="piece_image" src="./images/black_knight.png" alt="" />`,
                     type: 'knight',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_knight_2: {
+                    id: 14,
                     entity: '&#9822;',
                     image: `<img class="piece_image" src="./images/black_knight.png" alt="" />`,
                     type: 'knight',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_queen: {
+                    id: 15,
                     entity: '&#9819;',
                     image: `<img class="piece_image" src="./images/black_queen.png" alt="" />`,
                     type: 'queen',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 b_king: {
+                    id: 16,
                     entity: '&#9818;',
                     image: `<img class="piece_image" src="./images/black_king.png" alt="" />`,
                     type: 'king',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_1: {
+                    id: 17,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_2: {
+                    id: 18,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_3: {
+                    id: 19,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_4: {
+                    id: 20,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_5: {
+                    id: 21,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_6: {
+                    id: 22,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_7: {
+                    id: 23,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_pawn_8: {
+                    id: 24,
                     entity: '&#9817;',
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_rook_1: {
+                    id: 25,
                     entity: '&#9814;',
                     image: `<img class="piece_image" src="./images/white_rook.png" alt="" />`,
                     type: 'rook',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_rook_2: {
+                    id: 26,
                     entity: '&#9814;',
                     image: `<img class="piece_image" src="./images/white_rook.png" alt="" />`,
                     type: 'rook',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_bishop_1: {
+                    id: 27,
                     entity: '&#9815;',
                     image: `<img class="piece_image" src="./images/white_bishop.png" alt="" />`,
                     type: 'bishop',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_bishop_2: {
+                    id: 28,
                     entity: '&#9815;',
                     image: `<img class="piece_image" src="./images/white_bishop.png" alt="" />`,
                     type: 'bishop',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_knight_1: {
+                    id: 29,
                     entity: '&#9816;',
                     image: `<img class="piece_image" src="./images/white_knight.png" alt="" />`,
                     type: 'knight',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_knight_2: {
+                    id: 30,
                     entity: '&#9816;',
                     image: `<img class="piece_image" src="./images/white_knight.png" alt="" />`,
                     type: 'knight',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_queen: {
+                    id: 31,
                     entity: '&#9813;',
                     image: `<img class="piece_image" src="./images/white_queen.png" alt="" />`,
                     type: 'queen',
-                    move: 0
+                    move: 0,
+                    is_captured: false
                 },
                 w_king: {
+                    id: 32,
                     entity: '&#9812;',
                     image: `<img class="piece_image" src="./images/white_king.png" alt="" />`,
                     type: 'king',
-                    move: 0
-                },
+                    move: 0,
+                    is_captured: false
+                }
             }
 
             const nextCol = {
@@ -297,71 +364,71 @@
                     
                     switch(tile_position) {
                         case 'H1':
-                            $('.tile[data-position=H1]').append(`<span class="piece" data-move="${ pieces.b_rook_1.move }" data-team="black" data-type="${pieces.b_rook_1.type}">${ pieces.b_rook_1.image }</span>`);
+                            $('.tile[data-position=H1]').append(`<span class="piece" data-id="${ pieces.b_rook_1.id }" data-move="${ pieces.b_rook_1.move }" data-team="black" data-type="${pieces.b_rook_1.type}">${ pieces.b_rook_1.image }</span>`);
                         case 'H2':
-                            $('.tile[data-position=H2]').append(`<span class="piece" data-move="${ pieces.b_knight_1.move }" data-team="black" data-type="${pieces.b_knight_1.type}">${ pieces.b_knight_1.image }</span>`);
+                            $('.tile[data-position=H2]').append(`<span class="piece" data-id="${ pieces.b_knight_1.id }" data-move="${ pieces.b_knight_1.move }" data-team="black" data-type="${pieces.b_knight_1.type}">${ pieces.b_knight_1.image }</span>`);
                         case 'H3':
-                            $('.tile[data-position=H3]').append(`<span class="piece" data-move="${ pieces.b_bishop_1.move }" data-team="black" data-type="${pieces.b_bishop_1.type}">${ pieces.b_bishop_1.image }</span>`);
+                            $('.tile[data-position=H3]').append(`<span class="piece" data-id="${ pieces.b_bishop_1.id }" data-move="${ pieces.b_bishop_1.move }" data-team="black" data-type="${pieces.b_bishop_1.type}">${ pieces.b_bishop_1.image }</span>`);
                         case 'H4':
-                            $('.tile[data-position=H4]').append(`<span class="piece" data-move="${ pieces.b_queen.move }" data-team="black" data-type="${pieces.b_queen.type}">${ pieces.b_queen.image }</span>`);
+                            $('.tile[data-position=H4]').append(`<span class="piece" data-id="${ pieces.b_queen.id }" data-move="${ pieces.b_queen.move }" data-team="black" data-type="${pieces.b_queen.type}">${ pieces.b_queen.image }</span>`);
                         case 'H5':
-                            $('.tile[data-position=H5]').append(`<span class="piece" data-move="${ pieces.b_king.move }" data-team="black" data-type="${pieces.b_king.type}">${ pieces.b_king.image }</span>`);
+                            $('.tile[data-position=H5]').append(`<span class="piece" data-id="${ pieces.b_king.id }" data-move="${ pieces.b_king.move }" data-team="black" data-type="${pieces.b_king.type}">${ pieces.b_king.image }</span>`);
                         case 'H6':
-                            $('.tile[data-position=H6]').append(`<span class="piece" data-move="${ pieces.b_bishop_2.move }" data-team="black" data-type="${pieces.b_bishop_2.type}">${ pieces.b_bishop_2.image }</span>`);
+                            $('.tile[data-position=H6]').append(`<span class="piece" data-id="${ pieces.b_bishop_1.id }" data-move="${ pieces.b_bishop_2.move }" data-team="black" data-type="${pieces.b_bishop_2.type}">${ pieces.b_bishop_2.image }</span>`);
                         case 'H7':
-                            $('.tile[data-position=H7]').append(`<span class="piece" data-move="${ pieces.b_knight_2.move }" data-team="black" data-type="${pieces.b_knight_2.type}">${ pieces.b_knight_2.image }</span>`);
+                            $('.tile[data-position=H7]').append(`<span class="piece" data-id="${ pieces.b_knight_2.id }" data-move="${ pieces.b_knight_2.move }" data-team="black" data-type="${pieces.b_knight_2.type}">${ pieces.b_knight_2.image }</span>`);
                         case 'H8':
-                            $('.tile[data-position=H8]').append(`<span class="piece" data-move="${ pieces.b_rook_2.move }" data-team="black" data-type="${pieces.b_rook_2.type}">${ pieces.b_rook_2.image }</span>`);
+                            $('.tile[data-position=H8]').append(`<span class="piece" data-id="${ pieces.b_rook_2.id }" data-move="${ pieces.b_rook_2.move }" data-team="black" data-type="${pieces.b_rook_2.type}">${ pieces.b_rook_2.image }</span>`);
                         case 'G1':
-                            $('.tile[data-position=G1]').append(`<span class="piece" data-move="${ pieces.b_pawn_1.move }" data-team="black" data-type="${pieces.b_pawn_1.type}">${ pieces.b_pawn_1.image }</span>`);
+                            $('.tile[data-position=G1]').append(`<span class="piece" data-id="${ pieces.b_pawn_1.id }" data-move="${ pieces.b_pawn_1.move }" data-team="black" data-type="${pieces.b_pawn_1.type}">${ pieces.b_pawn_1.image }</span>`);
                         case 'G2':
-                            $('.tile[data-position=G2]').append(`<span class="piece" data-move="${ pieces.b_pawn_2.move }" data-team="black" data-type="${pieces.b_pawn_2.type}">${ pieces.b_pawn_2.image }</span>`);
+                            $('.tile[data-position=G2]').append(`<span class="piece" data-id="${ pieces.b_pawn_2.id }" data-move="${ pieces.b_pawn_2.move }" data-team="black" data-type="${pieces.b_pawn_2.type}">${ pieces.b_pawn_2.image }</span>`);
                         case 'G3':
-                            $('.tile[data-position=G3]').append(`<span class="piece" data-move="${ pieces.b_pawn_3.move }" data-team="black" data-type="${pieces.b_pawn_3.type}">${ pieces.b_pawn_3.image }</span>`);
+                            $('.tile[data-position=G3]').append(`<span class="piece" data-id="${ pieces.b_pawn_3.id }" data-move="${ pieces.b_pawn_3.move }" data-team="black" data-type="${pieces.b_pawn_3.type}">${ pieces.b_pawn_3.image }</span>`);
                         case 'G4':
-                            $('.tile[data-position=G4]').append(`<span class="piece" data-move="${ pieces.b_pawn_4.move }" data-team="black" data-type="${pieces.b_pawn_4.type}">${ pieces.b_pawn_4.image }</span>`);
+                            $('.tile[data-position=G4]').append(`<span class="piece" data-id="${ pieces.b_pawn_4.id }" data-move="${ pieces.b_pawn_4.move }" data-team="black" data-type="${pieces.b_pawn_4.type}">${ pieces.b_pawn_4.image }</span>`);
                         case 'G5':
-                            $('.tile[data-position=G5]').append(`<span class="piece" data-move="${ pieces.b_pawn_5.move }" data-team="black" data-type="${pieces.b_pawn_5.type}">${ pieces.b_pawn_5.image }</span>`);
+                            $('.tile[data-position=G5]').append(`<span class="piece" data-id="${ pieces.b_pawn_5.id }" data-move="${ pieces.b_pawn_5.move }" data-team="black" data-type="${pieces.b_pawn_5.type}">${ pieces.b_pawn_5.image }</span>`);
                         case 'G6':
-                            $('.tile[data-position=G6]').append(`<span class="piece" data-move="${ pieces.b_pawn_6.move }" data-team="black" data-type="${pieces.b_pawn_6.type}">${ pieces.b_pawn_6.image }</span>`);
+                            $('.tile[data-position=G6]').append(`<span class="piece" data-id="${ pieces.b_pawn_6.id }" data-move="${ pieces.b_pawn_6.move }" data-team="black" data-type="${pieces.b_pawn_6.type}">${ pieces.b_pawn_6.image }</span>`);
                         case 'G7':
-                            $('.tile[data-position=G7]').append(`<span class="piece" data-move="${ pieces.b_pawn_7.move }" data-team="black" data-type="${pieces.b_pawn_7.type}">${ pieces.b_pawn_7.image }</span>`);
+                            $('.tile[data-position=G7]').append(`<span class="piece" data-id="${ pieces.b_pawn_7.id }" data-move="${ pieces.b_pawn_7.move }" data-team="black" data-type="${pieces.b_pawn_7.type}">${ pieces.b_pawn_7.image }</span>`);
                         case 'G8':
-                            $('.tile[data-position=G8]').append(`<span class="piece" data-move="${ pieces.b_pawn_8.move }" data-team="black" data-type="${pieces.b_pawn_8.type}">${ pieces.b_pawn_8.image }</span>`);
+                            $('.tile[data-position=G8]').append(`<span class="piece" data-id="${ pieces.b_pawn_8.id }" data-move="${ pieces.b_pawn_8.move }" data-team="black" data-type="${pieces.b_pawn_8.type}">${ pieces.b_pawn_8.image }</span>`);
                         case 'B1':
-                            $('.tile[data-position=B1]').append(`<span class="piece" data-move="${ pieces.w_pawn_1.move }" data-team="white" data-type="${pieces.w_pawn_1.type}">${ pieces.w_pawn_1.image }</span>`);
+                            $('.tile[data-position=B1]').append(`<span class="piece" data-id="${ pieces.w_pawn_1.id }" data-move="${ pieces.w_pawn_1.move }" data-team="white" data-type="${pieces.w_pawn_1.type}">${ pieces.w_pawn_1.image }</span>`);
                         case 'B2':
-                            $('.tile[data-position=B2]').append(`<span class="piece" data-move="${ pieces.w_pawn_2.move }" data-team="white" data-type="${pieces.w_pawn_2.type}">${ pieces.w_pawn_2.image }</span>`);
+                            $('.tile[data-position=B2]').append(`<span class="piece" data-id="${ pieces.w_pawn_2.id }" data-move="${ pieces.w_pawn_2.move }" data-team="white" data-type="${pieces.w_pawn_2.type}">${ pieces.w_pawn_2.image }</span>`);
                         case 'B3':
-                            $('.tile[data-position=B3]').append(`<span class="piece" data-move="${ pieces.w_pawn_3.move }" data-team="white" data-type="${pieces.w_pawn_3.type}">${ pieces.w_pawn_3.image }</span>`);
+                            $('.tile[data-position=B3]').append(`<span class="piece" data-id="${ pieces.w_pawn_3.id }" data-move="${ pieces.w_pawn_3.move }" data-team="white" data-type="${pieces.w_pawn_3.type}">${ pieces.w_pawn_3.image }</span>`);
                         case 'B4':
-                            $('.tile[data-position=B4]').append(`<span class="piece" data-move="${ pieces.w_pawn_4.move }" data-team="white" data-type="${pieces.w_pawn_4.type}">${ pieces.w_pawn_4.image }</span>`);
+                            $('.tile[data-position=B4]').append(`<span class="piece" data-id="${ pieces.w_pawn_4.id }" data-move="${ pieces.w_pawn_4.move }" data-team="white" data-type="${pieces.w_pawn_4.type}">${ pieces.w_pawn_4.image }</span>`);
                         case 'B5':
-                            $('.tile[data-position=B5]').append(`<span class="piece" data-move="${ pieces.w_pawn_5.move }" data-team="white" data-type="${pieces.w_pawn_5.type}">${ pieces.w_pawn_5.image }</span>`);
+                            $('.tile[data-position=B5]').append(`<span class="piece" data-id="${ pieces.w_pawn_5.id }" data-move="${ pieces.w_pawn_5.move }" data-team="white" data-type="${pieces.w_pawn_5.type}">${ pieces.w_pawn_5.image }</span>`);
                         case 'B6':
-                            $('.tile[data-position=B6]').append(`<span class="piece" data-move="${ pieces.w_pawn_6.move }" data-team="white" data-type="${pieces.w_pawn_6.type}">${ pieces.w_pawn_6.image }</span>`);
+                            $('.tile[data-position=B6]').append(`<span class="piece" data-id="${ pieces.w_pawn_6.id }" data-move="${ pieces.w_pawn_6.move }" data-team="white" data-type="${pieces.w_pawn_6.type}">${ pieces.w_pawn_6.image }</span>`);
                         case 'B7':
-                            $('.tile[data-position=B7]').append(`<span class="piece" data-move="${ pieces.w_pawn_7.move }" data-team="white" data-type="${pieces.w_pawn_7.type}">${ pieces.w_pawn_7.image }</span>`);
+                            $('.tile[data-position=B7]').append(`<span class="piece" data-id="${ pieces.w_pawn_7.id }" data-move="${ pieces.w_pawn_7.move }" data-team="white" data-type="${pieces.w_pawn_7.type}">${ pieces.w_pawn_7.image }</span>`);
                         case 'B8':
-                            $('.tile[data-position=B8]').append(`<span class="piece" data-move="${ pieces.w_pawn_8.move }" data-team="white" data-type="${pieces.w_pawn_8.type}">${ pieces.w_pawn_8.image }</span>`);
+                            $('.tile[data-position=B8]').append(`<span class="piece" data-id="${ pieces.w_pawn_8.id }" data-move="${ pieces.w_pawn_8.move }" data-team="white" data-type="${pieces.w_pawn_8.type}">${ pieces.w_pawn_8.image }</span>`);
                         case 'A1':
-                            $('.tile[data-position=A1]').append(`<span class="piece" data-move="${ pieces.w_rook_1.move }" data-team="white" data-type="${pieces.w_rook_1.type}">${ pieces.w_rook_1.image }</span>`);
+                            $('.tile[data-position=A1]').append(`<span class="piece" data-id="${ pieces.w_rook_1.id }" data-move="${ pieces.w_rook_1.move }" data-team="white" data-type="${pieces.w_rook_1.type}">${ pieces.w_rook_1.image }</span>`);
                         case 'A2':
-                            $('.tile[data-position=A2]').append(`<span class="piece" data-move="${ pieces.w_knight_1.move }" data-team="white" data-type="${pieces.w_knight_1.type}">${ pieces.w_knight_1.image }</span>`);
+                            $('.tile[data-position=A2]').append(`<span class="piece" data-id="${ pieces.w_knight_1.id }" data-move="${ pieces.w_knight_1.move }" data-team="white" data-type="${pieces.w_knight_1.type}">${ pieces.w_knight_1.image }</span>`);
                         case 'A3':
-                            $('.tile[data-position=A3]').append(`<span class="piece" data-move="${ pieces.w_bishop_1.move }" data-team="white" data-type="${pieces.w_bishop_1.type}">${ pieces.w_bishop_1.image }</span>`);
+                            $('.tile[data-position=A3]').append(`<span class="piece" data-id="${ pieces.w_bishop_1.id }" data-move="${ pieces.w_bishop_1.move }" data-team="white" data-type="${pieces.w_bishop_1.type}">${ pieces.w_bishop_1.image }</span>`);
                         case 'A4':
-                            $('.tile[data-position=A4]').append(`<span class="piece" data-move="${ pieces.w_queen.move }" data-team="white" data-type="${pieces.w_queen.type}">${ pieces.w_queen.image }</span>`);
+                            $('.tile[data-position=A4]').append(`<span class="piece" data-id="${ pieces.w_queen.id }" data-move="${ pieces.w_queen.move }" data-team="white" data-type="${pieces.w_queen.type}">${ pieces.w_queen.image }</span>`);
                         case 'A5':
-                            $('.tile[data-position=A5]').append(`<span class="piece" data-move="${ pieces.w_king.move }" data-team="white" data-type="${pieces.w_king.type}">${ pieces.w_king.image }</span>`);
+                            $('.tile[data-position=A5]').append(`<span class="piece" data-id="${ pieces.w_king.id }" data-move="${ pieces.w_king.move }" data-team="white" data-type="${pieces.w_king.type}">${ pieces.w_king.image }</span>`);
                         case 'A6':
-                            $('.tile[data-position=A6]').append(`<span class="piece" data-move="${ pieces.w_bishop_2.move }" data-team="white" data-type="${pieces.w_bishop_2.type}">${ pieces.w_bishop_2.image }</span>`);
+                            $('.tile[data-position=A6]').append(`<span class="piece" data-id="${ pieces.w_bishop_2.id }" data-move="${ pieces.w_bishop_2.move }" data-team="white" data-type="${pieces.w_bishop_2.type}">${ pieces.w_bishop_2.image }</span>`);
                         case 'A7':
-                            $('.tile[data-position=A7]').append(`<span class="piece" data-move="${ pieces.w_knight_2.move }" data-team="white" data-type="${pieces.w_knight_2.type}">${ pieces.w_knight_2.image }</span>`);
+                            $('.tile[data-position=A7]').append(`<span class="piece" data-id="${ pieces.w_knight_2.id }" data-move="${ pieces.w_knight_2.move }" data-team="white" data-type="${pieces.w_knight_2.type}">${ pieces.w_knight_2.image }</span>`);
                         case 'A8':
-                            $('.tile[data-position=A8]').append(`<span class="piece" data-move="${ pieces.w_rook_2.move }" data-team="white" data-type="${pieces.w_rook_2.type}">${ pieces.w_rook_2.image }</span>`);
+                            $('.tile[data-position=A8]').append(`<span class="piece" data-id="${ pieces.w_rook_2.id }" data-move="${ pieces.w_rook_2.move }" data-team="white" data-type="${pieces.w_rook_2.type}">${ pieces.w_rook_2.image }</span>`);
                         default:
-                            return null
+                            return false;
                     }
                 }
             }
@@ -369,6 +436,12 @@
             function highlight_potential_moves(potential_destinations) {
                 for(var i = 0; i < potential_destinations.length; i++) {
                     $(`.tile[data-position=${ potential_destinations[i] }]`).addClass(' potential_destination');
+
+                    let current_element = $(`.tile[data-position=${ potential_destinations[i] }]`)[0];
+
+                    if($(current_element).children().length) {
+                        $(current_element).addClass(' kill_destination');
+                    }
                 }
             }
 
@@ -533,7 +606,7 @@
                         if(letterToNum[col] < letterToNum[destination_col]) { // bottom to top
                             currCol = nextCol[currCol];
 
-                            for(currRow = ((1 * row) + 1); currRow <= destination_row; currRow++) {
+                            for(currRow = ((1 * row) + 1); currRow < destination_row; currRow++) {
                                 var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
 
                                 if($(current_element).children().length > 0) {
@@ -545,7 +618,7 @@
                         } else { // top to bottom
                             currCol = prevCol[currCol];
 
-                            for(currRow = ((1 * row) + 1); currRow <= destination_row; currRow++) {
+                            for(currRow = ((1 * row) + 1); currRow < destination_row; currRow++) {
                                 var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
 
                                 if($(current_element).children().length > 0) {
@@ -559,7 +632,7 @@
                         if(letterToNum[col] < letterToNum[destination_col]) { // bottom to top
                             currCol = nextCol[currCol];
 
-                            for(currRow = (row - 1); currRow >= destination_row; currRow--) {
+                            for(currRow = (row - 1); currRow > destination_row; currRow--) {
                                 var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
 
                                 if($(current_element).children().length > 0) {
@@ -571,7 +644,7 @@
                         } else { // top to bottom
                             currCol = prevCol[currCol];
 
-                            for(currRow = (row - 1); currRow >= destination_row; currRow--) {
+                            for(currRow = (row - 1); currRow > destination_row; currRow--) {
                                 var current_element = $(`.tile[data-position=${ currCol + currRow }`)[0];
 
                                 if($(current_element).children().length > 0) {
@@ -584,14 +657,14 @@
                     }
                 } else if(col === destination_col){ // if path is horizontal
                     if(row < destination_row) { // traverse right
-                        for(var i = ((1 * row) + 1); i <= destination_row; i++) {
+                        for(var i = ((1 * row) + 1); i < destination_row; i++) {
                             var current_element = $(`.tile[data-position=${col + i}]`)[0];
                             if($(current_element).children().length > 0) {
                                 return false
                             }
                         }
                     } else { // traverse left
-                        for(var i = (row - 1); i >= destination_row; i--) {
+                        for(var i = (row - 1); i > destination_row; i--) {
                             var current_element = $(`.tile[data-position=${col + i}]`)[0];
                             if($(current_element).children().length > 0) {
                                 return false;
@@ -600,14 +673,14 @@
                     }
                 } else { // if path is vertical
                     if(letterToNum[col] < letterToNum[destination_col]) { // traverse up
-                        for(var i = (letterToNum[col] + 1); i <= letterToNum[destination_col]; i++) {
+                        for(var i = (letterToNum[col] + 1); i < letterToNum[destination_col]; i++) {
                             var current_element = $(`.tile[data-position=${numToLetter[i] + row}]`)[0];
                             if($(current_element).children().length > 0) {
                                 return false;
                             }
                         }
                     } else { // traverse down
-                        for(var i = (letterToNum[col] - 1); i >= letterToNum[destination_col]; i--) {
+                        for(var i = (letterToNum[col] - 1); i > letterToNum[destination_col]; i--) {
                             var current_element = $(`.tile[data-position=${numToLetter[i] + row}]`)[0];
                             if($(current_element).children().length > 0) {
                                 return false;
@@ -719,6 +792,7 @@
             function clear_active_tiles() {
                 const active_tiles = document.getElementsByClassName('active_tile');
                 const potential_moves = document.getElementsByClassName('potential_destination');
+                const kill_moves = document.getElementsByClassName('kill_destination');
 
                 for(var i = 0; i < active_tiles.length; i++) {
                     $(`.tile`).removeClass(' active_tile');
@@ -726,6 +800,10 @@
 
                 for(var j = 0; j < potential_moves.length; j++) {
                     $(`.tile`).removeClass(' potential_destination');
+                }
+
+                for(var n = 0; n < kill_moves.length; n++) {
+                    $(`.tile`).removeClass(' kill_destination');
                 }
             }
 
@@ -742,39 +820,74 @@
                 }
             }
 
-            function move_piece(destination, piece) {
-                $(`.tile[data-position=${destination}]`).append(piece);
-                clear_active_tiles();
-                toggle_player_turn();
+            function add_move_to_piece(piece_id) {
+                $.map(pieces, function(value, index) {
+                    
+                    if(value.id === piece_id) {
+                        var current_move = pieces[index].move + 1;
+                        pieces[index].move = current_move
+
+                        $(`.piece[data-id=${piece_id}]`).data('move', current_move);
+                    }
+                });
+            }
+
+            function update_boneyard() {
+
+            }
+
+            function update_piece_to_captured(piece_id) {
+                $.map(pieces, function(value, index) {
+                    if(value.id === piece_id) {
+                        pieces[index].is_captured = true;
+                        update_boneyard();
+                    }
+                });
+            }
+
+            function move_piece(destination, piece, piece_id) {
+                let current_element = $(`.tile[data-position=${destination}]`)[0];
+
+                if($(current_element).children().length > 0) {
+                    // get child piece and add to boneyard array
+                    let enemy_piece_id = $(current_element).children().data().id;
+                    update_piece_to_captured(enemy_piece_id);
+                    $(current_element).empty();
+                    $(`.tile[data-position=${destination}]`).append(piece);
+                    clear_active_tiles();
+                    toggle_player_turn();
+                    add_move_to_piece(piece_id);
+                } else {
+                    $(`.tile[data-position=${destination}]`).append(piece);
+                    clear_active_tiles();
+                    toggle_player_turn();
+                    add_move_to_piece(piece_id);
+                }
             }
 
             $(document).on('click', '.potential_destination', function() {
                 const destination = $(this).data().position;
                 const piece = $('.active_tile').children('span');
+                const piece_id = $('.active_tile').children('span').data().id;
 
-                move_piece(destination, piece);
+                move_piece(destination, piece, piece_id);
             });
 
             $(document).on('click', '.tile', function() {
-            
                 const position = $(this).data().position;
 
                 if($(this).children().length > 0) {
-
                     // contains piece
                     const { team, type, move } = $(this).children('span').data();
                     
                     if(team == gameplay.player_turn) {
-
                         toggle_tile(position);
                         evaluate_moves(position, type, team, move);
                     } else {
-
                         // not their turn
                         clear_active_tiles();
                     }
                 } else {
-
                     // doesn't contain piece, do nothing
                 }
             });
