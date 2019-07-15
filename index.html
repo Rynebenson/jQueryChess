@@ -870,7 +870,9 @@
                     let valid_moves = evaluate_valid_moves(position, type, team, move);
 
                     if(valid_moves.indexOf(kings_position) > -1) {
-                        alert('check!');
+                        setTimeout(function() {
+                            alert('check');
+                        }, 250);
                     }
                 }
                 
