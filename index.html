@@ -5,13 +5,15 @@
         <title>Chess</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="index.css">
+        <link href="https://fonts.googleapis.com/css?family=Muli:700&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="board_wrapper">
             <div id="chessboard"></div>
         </div>
         <div class="boneyard">
-            <span className="boneyard_header">Boneyard</span>
+            <span class="boneyard_header">Boneyard</span>
+            <div class="boneyard_list"></div>
         </div>
 
         <script>
@@ -833,7 +835,14 @@
             }
 
             function update_boneyard() {
+                // reset boneyard
+                $('.boneyard_list').empty();
 
+                $.map(pieces, function(value, index) {
+                    if(value.is_captured === true) {
+                        $('.boneyard_list').append(value.image);
+                    }
+                });
             }
 
             function update_piece_to_captured(piece_id) {

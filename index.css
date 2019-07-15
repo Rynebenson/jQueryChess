@@ -1,16 +1,17 @@
 body {
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 .board_wrapper {
-  float: left;
+  display: flex;
   background-image: url('images/board.png');
   padding: 20px;
-  margin: 25px;
+  margin: 25px auto;
   width: 514px;
+  border-radius: 4px;
 }
 #chessboard {
-  float: left;
   background-color: rgba(0, 0, 0, 0);
   border: 1px solid rgba(238, 213, 183, 0.75);
 }
@@ -59,16 +60,28 @@ body {
 }
 
 .boneyard {
-  display: block;
-  float: left;
-  margin: 0 25px 50px;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
   background: #efefef;
   border-radius: 4px;
-  width: calc(100% - 100px);
+  width: calc(100% - 50px);
+  padding: 20px;
   max-width: 514px;
+  margin: 0 auto 50px;
 }
 .boneyard_header {
   display: block;
   text-align: center;
+  font-family: 'Muli', sans-serif;
+  font-size: 30px;
+}
+.boneyard_list {
+  display: block;
+  text-align: left;
+  margin: 25px 0 0;
+}
+.boneyard_list img {
+  width: 20%;
+  height: auto;
+  margin-bottom: 25px;
 }
