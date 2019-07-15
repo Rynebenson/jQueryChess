@@ -856,11 +856,21 @@
                 });
             }
 
+            function determine_checkmate(valid_moves, kings_valid_moves, kings_position) {
+                // if valid_moves contains king's valid move's and current position then checkmate
+                if(kings_valid_moves.every(element => valid_moves.indexOf(element) > -1) && valid_moves.indexOf(kings_position) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
             function check_if_king_is_in_check(team) {
                 let opposite_team;
                 team === "white" ? opposite_team = "black" : opposite_team = "white"
                 // get opponents kings position
                 let kings_position = $(`.piece[data-team="${opposite_team}"][data-type="king"]`).parent('div').data().position;
+                let kings_move = $(`.piece[data-team="${opposite_team}"][data-type="king"]`).data().move;
                 
                 // for each piece left for team check if kings position is in valid moves
                 let teams_pieces = $(`.piece[data-team="${team}"]`);
@@ -872,12 +882,24 @@
                     let valid_moves = evaluate_valid_moves(position, type, team, move);
 
                     if(valid_moves.indexOf(kings_position) > -1) {
-                        setTimeout(function() {
-                            alert('check');
-                        }, 250);
+                        // determine if checkmate
+                        let kings_valid_moves = evaluate_valid_moves(kings_position, "king", opposite_team, kings_move);
+
+                        if(kings_valid_moves.length < 1) { // if king has no moves then checkmate
+                            setTimeout(function() {
+                                alert('check mate! end the game');
+                            }, 250);
+                        } else if(determine_checkmate(valid_moves, kings_valid_moves, kings_position)) { // if valid_moves contains king's valid move and current positino then checkmate
+                            setTimeout(function() {
+                                alert('check mate! end the game');
+                            }, 250);
+                        } else {
+                            setTimeout(function() {
+                                alert('check');
+                            }, 250);
+                        }
                     }
                 }
-                
             }
 
             function move_piece(destination, piece, piece_id, team) {
