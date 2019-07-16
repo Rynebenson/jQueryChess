@@ -105,3 +105,36 @@ body {
   margin-top: 25px;
   margin-bottom: 25px;
 }
+.substitution_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.9);
+}
+.substitution_text {
+  display: block;
+  font-family: 'Muli', sans-serif;
+  font-size: 40px;
+  margin: 75px auto 0;
+  color: #fff;
+}
+.substitution_list {
+  display: flex;
+  width: 70%;
+  height: auto;
+  margin: auto;
+}
+.substitution_image {
+  display: block;
+  width: 20%;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.substitution_image:hover {
+  transform: scale(1.2);
+}

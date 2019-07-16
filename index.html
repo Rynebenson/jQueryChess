@@ -19,7 +19,14 @@
             <div class="boneyard_list"></div>
         </div>
         <div class="substitution_modal">
-            <span>Select </span>
+            <span class="substitution_text">Select a piece to substitute.</span>
+            <div class="substitution_list">
+                <img class="substitution_image" src="./images/white_pawn.png" alt="" />
+                <img class="substitution_image" src="./images/white_bishop.png" alt="" />
+                <img class="substitution_image" src="./images/white_knight.png" alt="" />
+                <img class="substitution_image" src="./images/white_rook.png" alt="" />
+                <img class="substitution_image" src="./images/white_queen.png" alt="" />
+            </div>
         </div>
 
         <script>
@@ -988,7 +995,7 @@
                                 if(value.id === piece_id) {
                                     let substituted = value.substituted;
                                     if(!substituted) {
-                                        $('.substitution_modal').show();
+                                        $('.substitution_modal').css({ display: 'flex' });
                                     }
                                 }
                             });
