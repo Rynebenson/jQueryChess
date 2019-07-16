@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>jQuery Chess</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="index.css">
@@ -16,6 +17,9 @@
         <div class="boneyard">
             <span class="boneyard_header">Boneyard</span>
             <div class="boneyard_list"></div>
+        </div>
+        <div class="substitution_modal">
+            <span>Select </span>
         </div>
 
         <script>
@@ -32,7 +36,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_2: {
                     id: 2,
@@ -40,7 +45,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_3: {
                     id: 3,
@@ -48,7 +54,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_4: {
                     id: 4,
@@ -56,7 +63,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_5: {
                     id: 5,
@@ -64,7 +72,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_6: {
                     id: 6,
@@ -72,7 +81,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_7: {
                     id: 7,
@@ -80,7 +90,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_pawn_8: {
                     id: 8,
@@ -88,7 +99,8 @@
                     image: `<img class="piece_image" src="./images/black_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 b_rook_1: {
                     id: 9,
@@ -160,7 +172,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_2: {
                     id: 18,
@@ -168,7 +181,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_3: {
                     id: 19,
@@ -176,7 +190,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_4: {
                     id: 20,
@@ -184,7 +199,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_5: {
                     id: 21,
@@ -192,7 +208,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_6: {
                     id: 22,
@@ -200,7 +217,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_7: {
                     id: 23,
@@ -208,7 +226,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_pawn_8: {
                     id: 24,
@@ -216,7 +235,8 @@
                     image: `<img class="piece_image" src="./images/white_pawn.png" alt="" />`,
                     type: 'pawn',
                     move: 0,
-                    is_captured: false
+                    is_captured: false,
+                    substituted: false
                 },
                 w_rook_1: {
                     id: 25,
@@ -957,13 +977,37 @@
                 }
             }
 
+            function check_for_pawn_substitution(piece_type, piece_id) {
+                if(piece_type === "pawn") {
+                    let { position } = $(`.piece[data-id=${piece_id}]`).parent('div').data();
+                    let { team } = $(`.piece[data-id=${piece_id}]`).data();
+                    
+                    if(team === "white") { // if team is white and piece gets to other side of board
+                        if(position.charAt(0) === "H") {
+                            $.map(pieces, function(value, index) {
+                                if(value.id === piece_id) {
+                                    let substituted = value.substituted;
+                                    if(!substituted) {
+                                        $('.substitution_modal').show();
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+
+                    }
+                }
+            }
+            
             $(document).on('click', '.potential_destination', function() {
                 const destination = $(this).data().position;
                 const piece = $('.active_tile').children('span');
+                const piece_type = $('.active_tile').children('span').data().type;
                 const piece_id = $('.active_tile').children('span').data().id;
                 const current_team = $('.active_tile').children('span').data().team;
 
                 move_piece(destination, piece, piece_id, current_team);
+                check_for_pawn_substitution(piece_type, piece_id);
             });
 
             $(document).on('click', '.tile', function() {
