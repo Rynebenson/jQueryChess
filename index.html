@@ -856,13 +856,51 @@
                 });
             }
 
-            function determine_checkmate(valid_moves, kings_valid_moves, kings_position) {
+            function determine_checkmate(valid_moves, kings_valid_moves, kings_position, team, opposite_team) {
                 // if valid_moves contains king's valid move's and current position then checkmate
                 if(kings_valid_moves.every(element => valid_moves.indexOf(element) > -1) && valid_moves.indexOf(kings_position) > -1) {
-                    return true;
+                    // determine if opponent can kill your move in check
+                    let current_count = 0;
+                    let piece_with_attack = [];
+                    // find pieces that have king in valid move and add to count
+                    for(var i = 0; i < $(`.piece[data-team=${team}]`).length; i++) {
+                        let current_element = $(`.piece[data-team=${team}]`)[i];
+                        let { type, move, id } = $(current_element).data();
+                        let position = $(current_element).parent('div').data().position;
+
+                        let pieces_moves = evaluate_valid_moves(position, type, team, move);
+
+                        if(kings_valid_moves.every(element => pieces_moves.indexOf(element) > -1) && pieces_moves.indexOf(kings_position) > -1) {
+                            current_count++;
+                            piece_with_attack.push(position);
+                        }
+                        
+                    }
+
+                    // if two pieces can attack the king it's checkmate
+                    if(current_count > 1) {
+                        return true;
+                    } else {
+                        // check if opponent can attack piece
+                        for(var i = 0; i < $(`.piece[data-team=${opposite_team}]`).length; i++) {
+                            let current_element = $(`.piece[data-team=${opposite_team}]`)[i];
+                            let { type, move, id } = $(current_element).data();
+                            let position = $(current_element).parent('div').data().position;
+                            console.log(`position: ${position}`);
+                            let opponents_moves = evaluate_valid_moves(position, type, opposite_team, move);
+                            console.log(opponents_moves);
+                            if(opponents_moves.indexOf(piece_with_attack[0]) > -1) {
+                                // opponent can attack
+                                return false;
+                            }
+                        }
+                    }
+
                 } else {
                     return false;
                 }
+
+                return true;
             }
 
             function check_if_king_is_in_check(team) {
@@ -885,11 +923,7 @@
                         // determine if checkmate
                         let kings_valid_moves = evaluate_valid_moves(kings_position, "king", opposite_team, kings_move);
 
-                        if(kings_valid_moves.length < 1) { // if king has no moves then checkmate
-                            setTimeout(function() {
-                                alert('check mate! end the game');
-                            }, 250);
-                        } else if(determine_checkmate(valid_moves, kings_valid_moves, kings_position)) { // if valid_moves contains king's valid move and current positino then checkmate
+                        if(determine_checkmate(valid_moves, kings_valid_moves, kings_position, team, opposite_team)) { // if valid_moves contains king's valid move and current position then checkmate
                             setTimeout(function() {
                                 alert('check mate! end the game');
                             }, 250);
