@@ -19,13 +19,14 @@
             <div class="boneyard_list"></div>
         </div>
         <div class="substitution_modal">
+            <span class="substitution_data"></span>
             <span class="substitution_text">Select a piece to substitute.</span>
             <div class="substitution_list">
-                <img class="substitution_image" src="./images/white_pawn.png" alt="" />
-                <img class="substitution_image" src="./images/white_bishop.png" alt="" />
-                <img class="substitution_image" src="./images/white_knight.png" alt="" />
-                <img class="substitution_image" src="./images/white_rook.png" alt="" />
-                <img class="substitution_image" src="./images/white_queen.png" alt="" />
+                <img class="substitution_image" data-type="pawn" src="./images/white_pawn.png" alt="" />
+                <img class="substitution_image" data-type="bishop" src="./images/white_bishop.png" alt="" />
+                <img class="substitution_image" data-type="knight" src="./images/white_knight.png" alt="" />
+                <img class="substitution_image" data-type="rook" src="./images/white_rook.png" alt="" />
+                <img class="substitution_image" data-type="queen" src="./images/white_queen.png" alt="" />
             </div>
         </div>
 
@@ -996,15 +997,74 @@
                                     let substituted = value.substituted;
                                     if(!substituted) {
                                         $('.substitution_modal').css({ display: 'flex' });
+                                        $('.substitution_data').data('id', piece_id);
+                                        $('.substitution_data').data('name', index);
+                                        $('.substitution_data').data('team', team);
                                     }
                                 }
                             });
                         }
                     } else {
-
+                        if(position.charAt(0) === "A") {
+                            $.map(pieces, function(value, index) {
+                                if(value.id === piece_id) {
+                                    let substituted = value.substituted;
+                                    if(!substituted) {
+                                        $('.substitution_modal').css({ display: 'flex' });
+                                        $('.substitution_data').data('id', piece_id);
+                                        $('.substitution_data').data('name', index);
+                                        $('.substitution_data').data('team', team);
+                                    }
+                                }
+                            });
+                        }
                     }
                 }
             }
+
+            $(document).on('click', '.substitution_image', function() {
+                let { id, name, team } = $('.substitution_data').data();
+                let { type } = $(this).data();
+
+                console.log(type);
+                
+                switch(type) {
+                    case "bishop":
+                        console.log('bishop');
+                        pieces[name].substituted = true;
+                        $(`.piece[data-id=${id}]`).children('img').attr('src', `./images/${team}_bishop.png`);
+                        $(`.piece[data-id=${id}]`).data("type", "bishop");
+                        $('.substitution_modal').css({ display: 'none' });
+                        $('.substitution_data').removeData(["id", "name", "team"]);
+                        break;
+                    case "knight":
+                        console.log('knight');
+                        pieces[name].substituted = true;
+                        $(`.piece[data-id=${id}]`).children('img').attr('src', `./images/${team}_knight.png`);
+                        $(`.piece[data-id=${id}]`).data('type', "knight");
+                        $('.substitution_modal').css({ display: 'none' });
+                        $('.substitution_data').removeData(["id", "name", "team"]);
+                        break;
+                    case "rook":
+                        console.log('rook');
+                        pieces[name].substituted = true;
+                        $(`.piece[data-id=${id}]`).children('img').attr('src', `./images/${team}_rook.png`);
+                        $(`.piece[data-id=${id}]`).data('type', "rook");
+                        $('.substitution_modal').css({ display: 'none' });
+                        $('.substitution_data').removeData(["id", "name", "team"]);
+                        break;
+                    case "queen":
+                        console.log('queen');
+                        pieces[name].substituted = true;
+                        $(`.piece[data-id=${id}]`).children('img').attr('src', `./images/${team}_queen.png`);
+                        $(`.piece[data-id=${id}]`).data('type', "queen");
+                        $('.substitution_modal').css({ display: 'none' });
+                        $('.substitution_data').removeData(["id", "name", "team"]);
+                        break;
+                    default:
+                        return false;
+                }
+            });
             
             $(document).on('click', '.potential_destination', function() {
                 const destination = $(this).data().position;

@@ -136,5 +136,5 @@ body {
   cursor: pointer;
 }
 .substitution_image:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) !important;
 }
